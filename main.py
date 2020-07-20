@@ -1,6 +1,18 @@
 import random
 
 
+# check lists from column and line methods for blank spaces and 'X' or 'O' wins
+def check_lists(list_to_check):
+    if all(ch != ' ' for ch in list_to_check):
+        if all(ch == 'X' for ch in list_to_check):
+            print("X wins")
+            return True
+        elif all(ch == 'O' for ch in list_to_check):
+            print("O wins")
+            return True
+    return False
+
+
 class Game:
     table_cells = [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
     player_character = 'X'
@@ -18,34 +30,34 @@ class Game:
         self.user_input = ""
 
     def play_game(self):
-        self.table_printer(self.table_cells)
+        self.table_printer()
         while self.game_not_finished is True:
             if self.player_turn is True:
                 self.user_input = [num for num in input("Enter the coordinates: ").split()]
                 while self.check_for_errors(self.user_input) is False:
                     self.user_input = [num for num in input("Enter the coordinates: ").split()]
-                self.table_printer(self.table_cells)
-                self.check_win_condition(self.table_cells)
+                self.table_printer()
+                self.check_win_condition()
                 self.player_turn = False
             else:
                 print(f"Making move level \"{self.ai_levels[self.ai_difficulty]}\"")
                 self.ai_play()
-                self.check_win_condition(self.table_cells)
-                self.table_printer(self.table_cells)
+                self.check_win_condition()
+                self.table_printer()
                 self.player_turn = True
 
     # prints the table
-    def table_printer(self, tic_tac_toe_table):
+    def table_printer(self):
         print("---------")
-        for i in range(len(tic_tac_toe_table)):
-            print("| " + " ".join(tic_tac_toe_table[i]) + " |")
+        for i in range(len(self.table_cells)):
+            print("| " + " ".join(self.table_cells[i]) + " |")
         print("---------")
 
     # checks win conditions after ALL user inputs
-    def check_win_condition(self, tic_tac_toe_table):
+    def check_win_condition(self):
 
-        conditions = (self.check_line(tic_tac_toe_table), self.check_column(tic_tac_toe_table),
-                      self.check_diagonal(tic_tac_toe_table))
+        conditions = (self.check_line(), self.check_column(),
+                      self.check_diagonal())
 
         if any(conditions):
             self.game_finished = True
@@ -53,7 +65,7 @@ class Game:
             exit()
         else:
             # runs through all indexes of table and return true if any " " is found
-            if any(char == " " for line in tic_tac_toe_table for char in line):
+            if any(char == " " for line in self.table_cells for char in line):
                 return
             else:
                 print("Draw")
@@ -106,44 +118,33 @@ class Game:
                 return
 
     # checks row for win condition
-    def check_line(self, tic_tac_toe_table):
-        for line in tic_tac_toe_table:
+    def check_line(self):
+        for line in self.table_cells:
             line_list = [line]
 
-            self.check_lists(line_list)
+            check_lists(line_list)
 
     # checks column for win condition
-    def check_column(self, tic_tac_toe_table):
+    def check_column(self):
         column_index = 0
         # runs through matrix' line
-        for _ in range(len(tic_tac_toe_table)):
+        for _ in range(len(self.table_cells)):
             column_list = []
             line_index = 0
             # runs through matrix' column
-            for _ in range(len(tic_tac_toe_table)):
+            for _ in range(len(self.table_cells)):
                 # appends to temp list value in table's specific index
-                column_list.append(tic_tac_toe_table[line_index][column_index])
+                column_list.append(self.table_cells[line_index][column_index])
                 line_index += 1
             column_index += 1
 
-            self.check_lists(column_list)
-
-    # check lists from column and line methods for blank spaces and 'X' or 'O' wins
-    def check_lists(self, list_to_check):
-        if all(ch != ' ' for ch in list_to_check):
-            if all(ch == 'X' for ch in list_to_check):
-                print("X wins")
-                return True
-            elif all(ch == 'O' for ch in list_to_check):
-                print("O wins")
-                return True
-        return False
+            check_lists(column_list)
 
     # gets both diagonals and store in a variable
-    def check_diagonal(self, tic_tac_toe_table):
+    def check_diagonal(self):
         # gets diagonal from matrix
-        diagonal_1 = [letter[index] for index, letter in enumerate(tic_tac_toe_table)]
-        diagonal_2 = [letter[-index - 1] for index, letter in enumerate(tic_tac_toe_table)]
+        diagonal_1 = [letter[index] for index, letter in enumerate(self.table_cells)]
+        diagonal_2 = [letter[-index - 1] for index, letter in enumerate(self.table_cells)]
 
         # checks if diagonal has blank spaces, if not check if the chars in it are equal
         if all(s != ' ' for s in diagonal_1) or all(s != ' ' for s in diagonal_2):

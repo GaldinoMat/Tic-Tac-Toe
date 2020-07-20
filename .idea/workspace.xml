@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c7d06a5-e619-4576-96b0-349df5f59639" name="Default Changelist" comment="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion" />
+    <list default="true" id="9c7d06a5-e619-4576-96b0-349df5f59639" name="Default Changelist" comment="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion">
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
