@@ -16,15 +16,15 @@ def generate_table(list_input, tic_tac_toe_table):
         else:
             tic_tac_toe_table.append([third_line for third_line in list_input[6:]])
 
-    return table
+    return tic_tac_toe_table
 
 
 # checks which side will take place in filling the predetermined board
-def table_filler(cl_place, ln_place):
+def table_filler(cl_place, ln_place, tic_tac_toe_table):
     x_check = 0
     o_check = 0
 
-    for lines in table:
+    for lines in tic_tac_toe_table:
         for letter in lines:
             if letter == 'X':
                 x_check += 1
@@ -32,9 +32,9 @@ def table_filler(cl_place, ln_place):
                 o_check += 1
 
     if x_check == o_check:
-        table[ln_place][cl_place] = 'X'
+        tic_tac_toe_table[ln_place][cl_place] = 'X'
     if x_check == o_check + 1:
-        table[ln_place][cl_place] = 'O'
+        tic_tac_toe_table[ln_place][cl_place] = 'O'
 
 
 # checks if the user input returns an occupied place in the matrix
@@ -56,13 +56,13 @@ def check_matrix_place(table_column, table_line, tic_tac_toe_table):
         print("This cell is occupied! Choose another one!")
         return False
     else:
-        table_filler(cl_matrix_place, ln_matrix_place)
+        table_filler(cl_matrix_place, ln_matrix_place, tic_tac_toe_table)
         return True
 
 
 # makes all three checks and add them to collection
 # if at least one of them returns false, return false and the while loop continues
-def check_for_errors(string):
+def check_for_errors(string, table):
     if string[0].isdigit() and string[1].isdigit():
         if all([int(item) <= 3 for item in string]):
             if check_matrix_place(int(string[0]), int(string[1]), table):
@@ -160,7 +160,7 @@ def main():
 
     user_input = [num for num in input("Enter the coordinates: ").split()]
 
-    while check_for_errors(user_input) is not True:
+    while check_for_errors(user_input, table) is not True:
         user_input = [num for num in input("Enter cells: ").split()]
 
     table_printer(table)
