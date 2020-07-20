@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c7d06a5-e619-4576-96b0-349df5f59639" name="Default Changelist" comment="Fixed issues with main method">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="9c7d06a5-e619-4576-96b0-349df5f59639" name="Default Changelist" comment="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595206250675</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion">
+      <created>1595275321658</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1595275321658</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,7 +133,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented main method" />
     <MESSAGE value="Fixed issues with main method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed issues with main method" />
+    <MESSAGE value="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Defined game class, set &quot;AI&quot; (easy mode only, runs with randint values), changed methods to place AI plays and represent it on board.&#10;Next step: medium and hard difficulties, add better implementation of random values, learn more about recursion" />
   </component>
   <component name="WindowStateProjectService">
     <state x="553" y="103" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1595259581227">
