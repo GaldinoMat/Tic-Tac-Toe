@@ -152,16 +152,19 @@ def check_diagonal(tic_tac_toe_table):
     return False
 
 
-user_input = [letter for letter in input("Enter the coordinates: ").replace("_", " ")]
-table = []
-generate_table(user_input, table)
-table_printer(table)
+def main():
+    user_input = [letter for letter in input("Enter the coordinates: ").replace("_", " ")]
+    table = []
+    generate_table(user_input, table)
+    table_printer(table)
 
-user_input = [num for num in input("Enter the coordinates: ").split()]
+    user_input = [num for num in input("Enter the coordinates: ").split()]
 
-while check_for_errors(user_input) is not True:
-    user_input = [num for num in input("Enter cells: ").split()]
+    while check_for_errors(user_input) is not True:
+        user_input = [num for num in input("Enter cells: ").split()]
 
-table_printer(table)
+    table_printer(table)
+    check_win_condition(table)
 
-check_win_condition(table)
+if __name__ == "__main__":
+    main()
