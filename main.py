@@ -166,5 +166,6 @@ def main():
     table_printer(table)
     check_win_condition(table)
 
+
 if __name__ == "__main__":
     main()
