@@ -14,37 +14,141 @@ def check_lists(list_to_check):
 
 
 class Game:
-    table_cells = [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
-    player_character = 'X'
-    ai_character = 'O'
-    player_turn = None
-    game_not_finished = True
-    game_finished = False
+    table_cells = [], [], []
+    player1_character = ''
+    player2_character = ''
+    user_vs_ai = False
+    ai_vs_user = False
+    ai_vs_ai = False
+    user_vs_user = False
+    player_turn = False
+    game_started = False
     ai_levels = {1: "easy", 0: "Medium", None: "Hard"}
     ai_difficulty = None
 
     def __init__(self):
+        """ Sets the game difficulty and starts it """
         self.ai_difficulty = 1
         self.player_turn = True
         self.play_game()
         self.user_input = ""
 
     def play_game(self):
+        self.table_cells = [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
+        self.game_starter()
         self.table_printer()
-        while self.game_not_finished is True:
-            if self.player_turn is True:
-                self.user_input = [num for num in input("Enter the coordinates: ").split()]
-                while self.check_for_errors(self.user_input) is False:
+        while self.game_started:
+            while self.user_vs_ai:
+                if self.player_turn:
                     self.user_input = [num for num in input("Enter the coordinates: ").split()]
-                self.table_printer()
-                self.check_win_condition()
-                self.player_turn = False
+                    while self.check_for_errors(self.user_input) is False:
+                        self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = False
+                else:
+                    print(f"Making move level \"{self.ai_levels[self.ai_difficulty]}\"")
+                    self.ai_play()
+                    self.check_win_condition()
+                    self.table_printer()
+                    self.player_turn = True
+
+            while self.ai_vs_user:
+                if self.player_turn is False:
+                    print(f"Making move level \"{self.ai_levels[self.ai_difficulty]}\"")
+                    self.ai_play()
+                    self.check_win_condition()
+                    self.table_printer()
+                    self.player_turn = True
+                else:
+                    self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    while self.check_for_errors(self.user_input) is False:
+                        self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = False
+
+            while self.user_vs_user:
+                if self.player_turn:
+                    self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    while self.check_for_errors(self.user_input) is False:
+                        self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = False
+                else:
+                    self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    while self.check_for_errors(self.user_input) is False:
+                        self.user_input = [num for num in input("Enter the coordinates: ").split()]
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = True
+
+            while self.ai_vs_ai:
+                if self.player_turn:
+                    self.ai_play()
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = False
+                else:
+                    self.ai_play()
+                    self.table_printer()
+                    self.check_win_condition()
+                    self.player_turn = True
+
+    # starts the game and sets game_started to True
+    def game_starter(self):
+        self.user_input = input("Input command: ").split()
+
+        while self.game_started is not True:
+            if self.user_input[0] == "start":
+                if self.user_input[1] == "easy":
+                    self.ai_difficulty = 1
+                    self.player1_character = 'X'
+                    self.player_turn = False
+
+                    if self.user_input[2] == "easy":
+                        self.player2_character = 'O'
+                        self.game_started = True
+                        self.ai_vs_ai = True
+                        self.player_turn = True
+                        return
+                    elif self.user_input[2] == "user":
+                        self.player2_character = 'O'
+                        self.game_started = True
+                        self.ai_vs_user = True
+                        return
+                    else:
+                        print("Bad parameters!")
+                        self.user_input = input("Input command: ").split()
+
+                elif self.user_input[1] == "user":
+                    self.player1_character = 'X'
+
+                    if self.user_input[2] == "easy":
+                        self.ai_difficulty = 1
+                        self.player2_character = 'O'
+                        self.game_started = True
+                        self.user_vs_ai = True
+                        return
+                    elif self.user_input[2] == "user":
+                        self.player2_character = 'O'
+                        self.game_started = True
+                        self.user_vs_user = True
+                        return
+                    else:
+                        print("Bad parameters!")
+                        self.user_input = input("Input command: ").split()
+
+                else:
+                    print("Bad parameters!")
+                    self.user_input = input("Input command: ").split()
+
+            elif self.user_input[0] == "exit":
+                exit()
             else:
-                print(f"Making move level \"{self.ai_levels[self.ai_difficulty]}\"")
-                self.ai_play()
-                self.check_win_condition()
-                self.table_printer()
-                self.player_turn = True
+                print("Bad parameters!")
+                self.user_input = input("Input command: ").split()
 
     # prints the table
     def table_printer(self):
@@ -60,17 +164,16 @@ class Game:
                       self.check_diagonal())
 
         if any(conditions):
-            self.game_finished = True
-            self.game_not_finished = False
-            exit()
+            self.game_started = False
+            self.play_game()
         else:
             # runs through all indexes of table and return true if any " " is found
             if any(char == " " for line in self.table_cells for char in line):
                 return
             else:
                 print("Draw")
-                self.game_finished = True
-                self.game_not_finished = False
+                self.game_started = False
+                self.play_game()
                 return
 
     # makes all three checks and add them to collection
@@ -104,25 +207,34 @@ class Game:
         # checks if move made by player or AI is valid
         place = tic_tac_toe_table[ln_matrix_place][cl_matrix_place]
         if self.player_turn:
-            if place == 'X' or place == 'O':
+            if place == 'X' or place == 'O' and self.ai_vs_ai is False:
                 print("This cell is occupied! Choose another one!")
                 return False
             else:
-                tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.player_character
-                return True
+                if self.user_vs_ai or self.user_vs_user or self.ai_vs_ai:
+                    tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.player1_character
+                    return True
+                elif self.ai_vs_user:
+                    tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.player2_character
+                    return True
         else:
             if place == 'X' or place == 'O':
                 self.ai_play()
             else:
-                tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.ai_character
-                return
+                if self.user_vs_ai or self.user_vs_user or self.ai_vs_ai:
+                    tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.player2_character
+                    return True
+                elif self.ai_vs_user:
+                    tic_tac_toe_table[ln_matrix_place][cl_matrix_place] = self.player1_character
+                    return True
 
     # checks row for win condition
     def check_line(self):
         for line in self.table_cells:
-            line_list = [line]
 
-            check_lists(line_list)
+            if check_lists(line):
+                return True
+        return False
 
     # checks column for win condition
     def check_column(self):
@@ -138,7 +250,9 @@ class Game:
                 line_index += 1
             column_index += 1
 
-            check_lists(column_list)
+            if check_lists(column_list):
+                return True
+        return False
 
     # gets both diagonals and store in a variable
     def check_diagonal(self):
