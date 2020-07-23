@@ -2,14 +2,15 @@ import random
 
 
 # check lists from column and line methods for blank spaces and 'X' or 'O' wins
-def check_lists(list_to_check):
+def check_lists(*list_to_check):
     if all(ch != ' ' for ch in list_to_check):
-        if all(ch == 'X' for ch in list_to_check):
-            print("X wins")
-            return True
-        elif all(ch == 'O' for ch in list_to_check):
-            print("O wins")
-            return True
+        for lists in list_to_check:
+            if all(ch == 'X' for ch in lists):
+                print("X wins")
+                return True
+            elif all(ch == 'O' for ch in lists):
+                print("O wins")
+                return True
     return False
 
 
@@ -27,7 +28,7 @@ class Game:
     ai_difficulty = None
 
     def __init__(self):
-        """ Sets the game difficulty and starts it """
+        """Sets the game difficulty and starts it"""
         self.ai_difficulty = 1
         self.player_turn = True
         self.play_game()
@@ -260,20 +261,8 @@ class Game:
         diagonal_1 = [letter[index] for index, letter in enumerate(self.table_cells)]
         diagonal_2 = [letter[-index - 1] for index, letter in enumerate(self.table_cells)]
 
-        # checks if diagonal has blank spaces, if not check if the chars in it are equal
-        if all(s != ' ' for s in diagonal_1) or all(s != ' ' for s in diagonal_2):
-            if all(ch == 'X' for ch in diagonal_1):
-                print("X wins")
-                return True
-            elif all(ch == 'O' for ch in diagonal_1):
-                print("O wins")
-                return True
-            if all(ch == 'X' for ch in diagonal_2):
-                print("X wins")
-                return True
-            elif all(ch == 'O' for ch in diagonal_2):
-                print("O wins")
-                return True
+        if check_lists(diagonal_1, diagonal_2):
+            return True
 
         return False
 
